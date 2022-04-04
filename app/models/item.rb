@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :category, :condition, :shipping_price, :shipping_area_id, :shipping_date_id
+  belongs_to :category, :condition, :shipping_price, :shipping_area, :shipping_date
 
   validates :items_name, :items_comments, presence: true
   validates :price, numericality: { in: 300..9999999 }, presence: true
