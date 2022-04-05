@@ -9,7 +9,8 @@ class Item < ApplicationRecord
     validates :items_name, length: { maximum: 40 }
     validates :items_comments, length: { maximum: 1000 }
     validates :image
-    validates :price, numericality: { only_integer: true }, inclusion: { in: 300..9_999_999 }
+    validates :price, numericality: { only_integer: true }
+    validates :price, inclusion: { in: 300..9_999_999 }
   end
 
   with_options numericality: { other_than: 1, message: "can't be blank" } do
