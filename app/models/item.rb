@@ -7,7 +7,7 @@ class Item < ApplicationRecord
     validates :items_name
     validates :items_comments
     validates :image
-    validates :price, inclusion: { in: 300..9_999_999 }, format: { with: /\A[0-9]+\z/, message: 'には半角数数字を使用してください' }
+    validates :price, inclusion: { in: 300..9_999_999, allow_blank: true }, format: { with: /\A[0-9]+\z/, message: 'には半角数字を使用してください', allow_blank: true }
   end
 
   with_options numericality: { other_than: 1, message: "can't be blank" } do
@@ -18,10 +18,8 @@ class Item < ApplicationRecord
     validates :shipping_date_id
   end
   
-  validates :price, numericality: true
+  # validates :price, numericality: true
 
   has_one_attached :image
   # has_one :order
 end
-
-
