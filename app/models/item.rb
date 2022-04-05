@@ -2,12 +2,14 @@ class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category, :condition, :shipping_price, :shipping_area, :shipping_date
   belongs_to :user
+  has_one_attached :image
+  # has_one :order
 
   with_options presence: true do
     validates :items_name, length: { maximum: 40 }
     validates :items_comments, length: { maximum: 1000 }
     validates :image
-    validates :price, inclusion: { in: 300..9_999_999, allow_blank: true }, format: { with: /\A[0-9]+\z/, message: 'には半角数字を使用してください', allow_blank: true }
+    validates :price, numericality: { only_integer: true }, inclusion: { in: 300..9_999_999 }
   end
 
   with_options numericality: { other_than: 1, message: "can't be blank" } do
@@ -17,8 +19,4 @@ class Item < ApplicationRecord
     validates :shipping_area_id
     validates :shipping_date_id
   end
-
-
-  has_one_attached :image
-  # has_one :order
 end
