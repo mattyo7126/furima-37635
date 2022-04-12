@@ -59,18 +59,38 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Post code is invalid')
       end
-      it 'phone_numberにはハイフンがあると保存できないこと' do
-        @order_address.phone_number = '123-456789'
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Phone number is invalid')
-      end
       it 'post_codeは半角数字でないと保存できないこと' do
         @order_address.post_code = '１２３-aあｱ亜'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Post code is invalid')
       end
+      it 'post_codeは6桁以下では保存できないこと' do
+        @order_address.post_code = '123-456'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Post code is invalid')
+      end
+      it 'post_codeは8桁以上では保存できないこと' do
+        @order_address.post_code = '123-45678'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Post code is invalid')
+      end
+      it 'phone_numberにはハイフンがあると保存できないこと' do
+        @order_address.phone_number = '123-456789'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid')
+      end
       it 'phone_numberは半角数字でないと保存できないこと' do
         @order_address.phone_number = '１２３aあｱ亜'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'phone_numberは9桁以下では保存できないこと' do
+        @order_address.phone_number = '090111222'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'phone_numberは12桁以上では保存できないこと' do
+        @order_address.phone_number = '090111122223'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid')
       end
